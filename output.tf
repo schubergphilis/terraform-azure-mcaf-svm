@@ -10,6 +10,6 @@
 # }
 
 output "subscriptions" {
-  value = data.azurerm_subscriptions.this
+  value       = data.azurerm_subscriptions.this
   description = ""
 }

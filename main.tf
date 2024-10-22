@@ -1,46 +1,39 @@
 data "azurerm_client_config" "current" {}
 
 data "azurerm_billing_mca_account_scope" "this" {
-  for_each             = { for k, v in var.subscription : k => v if var.channel == "ea" }
+  count                = var.channel == "ea" ? 1 : 0
   billing_account_name = var.billing_account_name
   billing_profile_name = var.billing_profile_name
   invoice_section_name = var.invoice_section_name
 }
 
-data "azurerm_management_group" "this" {
-  for_each = { for k, v in var.subscription : k => v if var.channel == "ea" }
-  name     = var.parent_management_group_name
-}
-
 resource "azapi_resource" "this" {
-  for_each  = { for k, v in var.subscription : k => v if var.channel == "ea" }
+  count     = var.channel == "ea" ? 1 : 0
   type      = "Microsoft.Subscription/aliases@2021-10-01"
-  name      = each.key
+  name      = var.name
   parent_id = "/"
   body = { properties = {
     additionalProperties = {
-      managementGroupId    = data.azurerm_management_group.this.id
-      subscriptionOwnerId  = each.value.subscription_owner_id == null ? var.subscription_owner_id : each.value.subscription_owner_id
+      managementGroupId    = var.parent_management_group_id
+      subscriptionOwnerId  = var.owner_id
       subscriptionTenantId = data.azurerm_client_config.current.tenant_id
-      tags = {
-        for k, v in merge(var.tags, each.value.tags) : k => v
-      }
+      tags                 = var.tags
     }
-    billingScope = data.azurerm_billing_mca_account_scope.this.id
-    displayName  = each.key
-    workload     = each.value.sku
+    billingScope = data.azurerm_billing_mca_account_scope.this[0].id
+    displayName  = var.name
+    workload     = var.sku
     }
   }
 }
 
 resource "restful_operation" "this" {
-  for_each = { for k, v in var.subscription : k => v if var.channel == "csp" }
-  path     = "/api/create-subscription"
-  method   = "POST"
+  count  = var.channel == "csp" ? 1 : 0
+  path   = "/api/create-subscription"
+  method = "POST"
 
   body = {
-    SubscriptionName = each.key
-    SkuId            = each.value.sku == "Production" ? "0001" : "0002"
+    SubscriptionName = var.name
+    SkuId            = var.sku == "Production" ? "0001" : "0002"
   }
 
   poll = {
@@ -62,7 +55,6 @@ resource "restful_operation" "this" {
 # }
 
 data "azurerm_subscriptions" "this" {
-  for_each = var.subscription
-  display_name_contains = each.key
-  depends_on = [ restful_operation.this ]
+  display_name_contains = var.name
+  depends_on            = [restful_operation.this, azapi_resource.this]
 }
