@@ -117,7 +117,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_subscriptions"></a> [subscriptions](#output\_subscriptions) | n/a |
+| <a name="output_subscription"></a> [subscription](#output\_subscription) | Created subscription details |
 <!-- END_TF_DOCS -->
 
 ## License
