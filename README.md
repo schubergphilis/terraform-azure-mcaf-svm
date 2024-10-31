@@ -93,8 +93,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azapi_resource.this](https://registry.terraform.io/providers/azure/azapi/1.15.0/docs/resources/resource) | resource |
-| [restful_operation.this](https://registry.terraform.io/providers/magodo/restful/0.14.0/docs/resources/operation) | resource |
+| [azapi_resource.subscription](https://registry.terraform.io/providers/azure/azapi/1.15.0/docs/resources/resource) | resource |
+| [restful_operation.subscription](https://registry.terraform.io/providers/magodo/restful/0.14.0/docs/resources/operation) | resource |
 | [azurerm_billing_mca_account_scope.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/billing_mca_account_scope) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
 | [azurerm_subscriptions.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscriptions) | data source |
@@ -105,12 +105,12 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_channel"></a> [channel](#input\_channel) | Billing channel to be used by the subscription | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name of the Subscription to be created | `string` | n/a | yes |
-| <a name="input_sku"></a> [sku](#input\_sku) | Type of subscription to create | `string` | n/a | yes |
 | <a name="input_billing_account_name"></a> [billing\_account\_name](#input\_billing\_account\_name) | The name of the billing account, only needed if channel is set to ea | `string` | `null` | no |
 | <a name="input_billing_profile_name"></a> [billing\_profile\_name](#input\_billing\_profile\_name) | The name of the billing profile, only needed if channel is set to ea | `string` | `null` | no |
 | <a name="input_invoice_section_name"></a> [invoice\_section\_name](#input\_invoice\_section\_name) | The name of the invoice section, only needed if channel is set to ea | `string` | `null` | no |
 | <a name="input_owner_id"></a> [owner\_id](#input\_owner\_id) | Id of the subscription owner, only needed if channel is set to ea. | `string` | `null` | no |
-| <a name="input_parent_management_group_id"></a> [parent\_management\_group\_id](#input\_parent\_management\_group\_id) | The name of the parent management group, only needed if channel is set to ea | `string` | `null` | no |
+| <a name="input_parent_management_group_id"></a> [parent\_management\_group\_id](#input\_parent\_management\_group\_id) | The Id of the parent management group, only needed if channel is set to ea | `string` | `null` | no |
+| <a name="input_sku"></a> [sku](#input\_sku) | Type of subscription to create | `string` | `"Production"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to add to the subscription, only needed if channel is set to ea. | `map(string)` | `null` | no |
 
 ## Outputs
