@@ -1,5 +1,5 @@
 module "csp_subscription" {
-  source  = "../.."
+  source = "../.."
 
   channel = "csp"
   name    = "sub-csp-test"
