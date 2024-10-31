@@ -82,7 +82,7 @@ az billing profile list --account-name $AccountName --expand "InvoiceSections" -
 | Name | Version |
 |------|---------|
 | <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 1.15.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.6.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
 | <a name="provider_restful"></a> [restful](#provider\_restful) | 0.14.0 |
 
 ## Modules
