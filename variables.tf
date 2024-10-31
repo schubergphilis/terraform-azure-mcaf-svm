@@ -20,6 +20,7 @@ variable "name" {
 variable "sku" {
   type        = string
   description = "Type of subscription to create"
+  default     = "Production"
 
   validation {
     condition     = contains(["Production", "DevTest"], var.sku)
@@ -60,7 +61,7 @@ variable "invoice_section_name" {
 }
 
 variable "parent_management_group_id" {
-  description = "The name of the parent management group, only needed if channel is set to ea"
+  description = "The Id of the parent management group, only needed if channel is set to ea"
   type        = string
   default     = null
 }

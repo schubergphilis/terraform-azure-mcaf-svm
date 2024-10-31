@@ -7,7 +7,7 @@ data "azurerm_billing_mca_account_scope" "this" {
   invoice_section_name = var.invoice_section_name
 }
 
-resource "azapi_resource" "this" {
+resource "azapi_resource" "subscription" {
   count     = var.channel == "ea" ? 1 : 0
   type      = "Microsoft.Subscription/aliases@2021-10-01"
   name      = var.name
@@ -26,7 +26,7 @@ resource "azapi_resource" "this" {
   }
 }
 
-resource "restful_operation" "this" {
+resource "restful_operation" "subscription" {
   count  = var.channel == "csp" ? 1 : 0
   path   = "/api/create-subscription"
   method = "POST"
@@ -56,5 +56,5 @@ resource "restful_operation" "this" {
 
 data "azurerm_subscriptions" "this" {
   display_name_contains = var.name
-  depends_on            = [restful_operation.this, azapi_resource.this]
+  depends_on            = [restful_operation.subscription, azapi_resource.subscription]
 }
