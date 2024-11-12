@@ -73,7 +73,7 @@ az billing profile list --account-name $AccountName --expand "InvoiceSections" -
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.7 |
-| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | 1.15.0 |
+| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | 2.0.1 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.0 |
 | <a name="requirement_restful"></a> [restful](#requirement\_restful) | 0.14.0 |
 
@@ -81,7 +81,7 @@ az billing profile list --account-name $AccountName --expand "InvoiceSections" -
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 1.15.0 |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 2.0.1 |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.0 |
 | <a name="provider_restful"></a> [restful](#provider\_restful) | 0.14.0 |
 
@@ -93,7 +93,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azapi_resource.subscription](https://registry.terraform.io/providers/azure/azapi/1.15.0/docs/resources/resource) | resource |
+| [azapi_resource.subscription](https://registry.terraform.io/providers/azure/azapi/2.0.1/docs/resources/resource) | resource |
 | [restful_operation.subscription](https://registry.terraform.io/providers/magodo/restful/0.14.0/docs/resources/operation) | resource |
 | [azurerm_billing_mca_account_scope.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/billing_mca_account_scope) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
