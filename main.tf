@@ -58,3 +58,9 @@ data "azurerm_subscriptions" "this" {
   display_name_contains = var.name
   depends_on            = [restful_operation.subscription, azapi_resource.subscription]
 }
+
+resource "azurerm_management_group_subscription_association" "this" {
+  count  = var.channel == "csp" ? 1 : 0
+  management_group_id = var.parent_management_group_id
+  subscription_id = data.azurerm_subscriptions.this[0].id
+}
