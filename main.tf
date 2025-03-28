@@ -1,15 +1,8 @@
 data "azurerm_client_config" "current" {}
 
-data "azurerm_billing_mca_account_scope" "this" {
-  count                = var.channel == "ea" ? 1 : 0
-  billing_account_name = var.billing_account_name
-  billing_profile_name = var.billing_profile_name
-  invoice_section_name = var.invoice_section_name
-}
-
 resource "azapi_resource" "subscription" {
   count     = var.channel == "ea" ? 1 : 0
-  type      = "Microsoft.Subscription/aliases@2021-10-01"
+  type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
   name      = var.name
   parent_id = "/"
   body = { properties = {
@@ -54,9 +47,19 @@ resource "restful_operation" "subscription" {
 #   method = "GET"
 # }
 
-data "azurerm_subscriptions" "this" {
-  display_name_contains = var.name
-  depends_on            = [restful_operation.subscription, azapi_resource.subscription]
+
+
+# data "azurerm_subscriptions" "this" {
+#   display_name_contains = var.name
+#   depends_on            = [restful_operation.subscription, azapi_resource.subscription]
+# }
+
+data "azapi_resource" "example" {
+  name      = var.name
+  parent_id = "/"
+  type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
+
+  response_export_values = ["properties.subscriptionId", "name"]
 }
 
 resource "azurerm_management_group_subscription_association" "this" {
