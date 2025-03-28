@@ -96,9 +96,8 @@ No modules.
 | [azapi_resource.subscription](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/resources/resource) | resource |
 | [azurerm_management_group_subscription_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_group_subscription_association) | resource |
 | [restful_operation.subscription](https://registry.terraform.io/providers/magodo/restful/0.14.0/docs/resources/operation) | resource |
-| [azurerm_billing_mca_account_scope.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/billing_mca_account_scope) | data source |
+| [azapi_resource.example](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/data-sources/resource) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
-| [azurerm_subscriptions.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscriptions) | data source |
 
 ## Inputs
 
@@ -118,7 +117,9 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_subscription"></a> [subscription](#output\_subscription) | Created subscription details |
+| <a name="output_display_name"></a> [display\_name](#output\_display\_name) | subscription display name |
+| <a name="output_id"></a> [id](#output\_id) | combined into an azure valid resource id |
+| <a name="output_subscription_id"></a> [subscription\_id](#output\_subscription\_id) | subscription id |
 <!-- END_TF_DOCS -->
 
 ## License
