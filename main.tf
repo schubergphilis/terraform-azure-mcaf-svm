@@ -1,5 +1,12 @@
 data "azurerm_client_config" "current" {}
 
+data "azurerm_billing_mca_account_scope" "this" {
+  count                = var.channel == "ea" ? 1 : 0
+  billing_account_name = var.billing_account_name
+  billing_profile_name = var.billing_profile_name
+  invoice_section_name = var.invoice_section_name
+}
+
 resource "azapi_resource" "subscription" {
   count     = var.channel == "ea" ? 1 : 0
   type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
@@ -54,7 +61,7 @@ resource "restful_operation" "subscription" {
 #   depends_on            = [restful_operation.subscription, azapi_resource.subscription]
 # }
 
-data "azapi_resource" "example" {
+data "azapi_resource" "subscription_metadata" {
   name      = var.name
   parent_id = "/"
   type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
