@@ -47,20 +47,6 @@ resource "restful_operation" "subscription" {
   }
 }
 
-# data "restful_resource" "subscription_metadata" {
-#   for_each = { for k, v in var.subscription : k => v if var.channel == "csp" }
-
-#   id     = "/api/create-subscription/${restful_operation.this[each.key].output}"
-#   method = "GET"
-# }
-
-
-
-# data "azurerm_subscriptions" "this" {
-#   display_name_contains = var.name
-#   depends_on            = [restful_operation.subscription, azapi_resource.subscription]
-# }
-
 data "azapi_resource" "subscription_metadata" {
   name      = var.name
   parent_id = "/"
