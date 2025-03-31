@@ -9,7 +9,7 @@ data "azurerm_billing_mca_account_scope" "this" {
 
 resource "azapi_resource" "subscription" {
   count     = var.channel == "ea" ? 1 : 0
-  type      = "Microsoft.Subscription/aliases@2021-10-01"
+  type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
   name      = var.name
   parent_id = "/"
   body = { properties = {
@@ -47,20 +47,16 @@ resource "restful_operation" "subscription" {
   }
 }
 
-# data "restful_resource" "subscription_metadata" {
-#   for_each = { for k, v in var.subscription : k => v if var.channel == "csp" }
+data "azapi_resource" "subscription_metadata" {
+  name      = var.name
+  parent_id = "/"
+  type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
 
-#   id     = "/api/create-subscription/${restful_operation.this[each.key].output}"
-#   method = "GET"
-# }
-
-data "azurerm_subscriptions" "this" {
-  display_name_contains = var.name
-  depends_on            = [restful_operation.subscription, azapi_resource.subscription]
+  response_export_values = ["properties.subscriptionId", "name"]
 }
 
 resource "azurerm_management_group_subscription_association" "this" {
   count               = var.channel == "csp" ? 1 : 0
   management_group_id = var.parent_management_group_id
-  subscription_id     = data.azurerm_subscriptions.this.subscriptions[0].id
+  subscription_id     = data.azapi_resource.subscription_metadata.output.properties.subscriptionId
 }
