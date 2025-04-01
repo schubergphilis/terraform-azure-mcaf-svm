@@ -12,16 +12,17 @@ resource "azapi_resource" "subscription" {
   type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
   name      = var.name
   parent_id = "/"
-  body = { properties = {
-    additionalProperties = {
-      managementGroupId    = var.parent_management_group_id
-      subscriptionOwnerId  = var.owner_id
-      subscriptionTenantId = data.azurerm_client_config.current.tenant_id
-      tags                 = var.tags
-    }
-    billingScope = data.azurerm_billing_mca_account_scope.this[0].id
-    displayName  = var.name
-    workload     = var.sku
+  body = {
+    properties = {
+      additionalProperties = {
+        managementGroupId    = var.parent_management_group_id
+        subscriptionOwnerId  = var.owner_id
+        subscriptionTenantId = data.azurerm_client_config.current.tenant_id
+        tags                 = var.tags
+      }
+      billingScope = data.azurerm_billing_mca_account_scope.this[0].id
+      displayName  = var.name
+      workload     = var.sku
     }
   }
 }
@@ -56,11 +57,6 @@ data "azapi_resource_list" "subscription_metadata" {
     displayName    = "value[?displayName == '${var.name}'].displayName"
     id             = "value[?displayName == '${var.name}'].id"
   }
-
-  depends_on = [
-    azapi_resource.subscription,
-    restful_operation.subscription
-  ]
 }
 
 resource "azurerm_management_group_subscription_association" "this" {
