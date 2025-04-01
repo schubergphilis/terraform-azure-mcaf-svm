@@ -73,5 +73,5 @@ data "azapi_resource" "subscription_metadata" {
 resource "azurerm_management_group_subscription_association" "this" {
   count               = var.channel == "csp" ? 1 : 0
   management_group_id = var.parent_management_group_id
-  subscription_id     = data.azapi_resource.subscription_metadata.output.properties.subscriptionId
+  subscription_id     = data.azapi_resource_list.subscription_metadata.output.subscriptionId[0]
 }
