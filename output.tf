@@ -1,14 +1,14 @@
 output "subscription_id" {
-  value       = data.azapi_resource_list.subscription_metadata.output.subscriptionId[0]
+  value       = data.azapi_resource.subscription_metadata.output.properties.subscriptionId
   description = "subscription id"
 }
 
 output "display_name" {
-  value       = data.azapi_resource_list.subscription_metadata.output.displayName[0]
+  value       = data.azapi_resource.subscription_metadata.output.properties.name
   description = "subscription display name"
 }
 
 output "id" {
-  value       = "/subscriptions/${data.azapi_resource_list.subscription_metadata.output.subscriptionId[0]}"
+  value       = "/subscriptions/${data.azapi_resource.subscription_metadata.output.properties.subscriptionId}"
   description = "combined into an azure valid resource id"
 }
