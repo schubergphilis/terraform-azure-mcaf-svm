@@ -9,6 +9,6 @@ output "display_name" {
 }
 
 output "id" {
-  value       = data.azapi_resource_list.subscription_metadata.output.id[0]
-  description = "Resource ID of the subscription"
+  value       = "/subscriptions/${data.azapi_resource_list.subscription_metadata.output.subscriptionId[0]}"
+  description = "combined into an azure valid resource id"
 }
