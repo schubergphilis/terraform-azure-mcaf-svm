@@ -47,16 +47,24 @@ resource "restful_operation" "subscription" {
   }
 }
 
-data "azapi_resource" "subscription_metadata" {
-  name      = var.name
+data "azapi_resource_list" "subscription_metadata" {
+  type      = "Microsoft.Resources/subscriptions@2024-11-01"
   parent_id = "/"
-  type      = "Microsoft.Subscription/aliases@2024-08-01-preview"
 
-  response_export_values = ["properties.subscriptionId", "name"]
+  response_export_values = {
+    subscriptionId = "value[?displayName == '${var.name}'].subscriptionId"
+    displayName = "value[?displayName == '${var.name}'].displayName"
+    id = "value[?displayName == '${var.name}'].id"
+  }
+
+  depends_on = [
+    azapi_resource.subscription,
+    restful_operation.subscription
+  ]
 }
 
 resource "azurerm_management_group_subscription_association" "this" {
   count               = var.channel == "csp" ? 1 : 0
   management_group_id = var.parent_management_group_id
-  subscription_id     = data.azapi_resource.subscription_metadata.output.properties.subscriptionId
+  subscription_id     = data.azapi_resource_list.subscription_metadata.output.subscriptionId[0]
 }
