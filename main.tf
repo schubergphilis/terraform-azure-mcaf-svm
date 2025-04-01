@@ -62,7 +62,6 @@ data "azapi_resource_list" "subscription_metadata" {
   ]
 }
 
-
 data "azapi_resource" "subscription_metadata" {
   name      = var.name
   parent_id = "/"

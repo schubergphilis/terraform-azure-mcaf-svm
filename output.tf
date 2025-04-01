@@ -4,7 +4,7 @@ output "subscription_id" {
 }
 
 output "display_name" {
-  value       = data.azapi_resource.subscription_metadata.output.properties.name
+  value       = data.azapi_resource.subscription_metadata.output.name
   description = "subscription display name"
 }
 
