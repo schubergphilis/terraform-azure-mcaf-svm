@@ -53,8 +53,8 @@ data "azapi_resource_list" "subscription_metadata" {
 
   response_export_values = {
     subscriptionId = "value[?displayName == '${var.name}'].subscriptionId"
-    displayName = "value[?displayName == '${var.name}'].displayName"
-    id = "value[?displayName == '${var.name}'].id"
+    displayName    = "value[?displayName == '${var.name}'].displayName"
+    id             = "value[?displayName == '${var.name}'].id"
   }
 
   depends_on = [
