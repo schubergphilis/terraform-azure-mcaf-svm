@@ -48,6 +48,11 @@ resource "restful_operation" "subscription" {
   }
 }
 
+data "azurerm_subscriptions" "this" {
+  display_name_contains = var.name
+  depends_on            = [restful_operation.subscription, azapi_resource.subscription]
+}
+
 data "azapi_resource_list" "subscription_metadata" {
   type      = "Microsoft.Resources/subscriptions@2024-11-01"
   parent_id = "/"
