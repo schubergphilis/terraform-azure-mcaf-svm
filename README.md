@@ -1,6 +1,11 @@
 # terraform-azure-mcaf-svm-csp
 This terraform module will be able to manage subscriptions for CSP and Enterprise agreements.
 
+## Important note
+
+Although the logic seems a bit off, with both an data an a resource fetching subscription information
+this has to do with reasons of continues changes, with an apply of a simple tag, it would recreate the whole stack after (rsg etc.)
+
 ## How to work with the CSP configuration
 
 you need to configure the restful provider.
@@ -96,9 +101,10 @@ No modules.
 | [azapi_resource.subscription](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/resources/resource) | resource |
 | [azurerm_management_group_subscription_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_group_subscription_association) | resource |
 | [restful_operation.subscription](https://registry.terraform.io/providers/magodo/restful/0.14.0/docs/resources/operation) | resource |
-| [azapi_resource.subscription_metadata](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/data-sources/resource) | data source |
+| [azapi_resource_list.subscription_metadata](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/data-sources/resource_list) | data source |
 | [azurerm_billing_mca_account_scope.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/billing_mca_account_scope) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
+| [azurerm_subscriptions.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscriptions) | data source |
 
 ## Inputs
 
