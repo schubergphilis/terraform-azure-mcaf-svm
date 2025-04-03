@@ -1,6 +1,11 @@
 # terraform-azure-mcaf-svm-csp
 This terraform module will be able to manage subscriptions for CSP and Enterprise agreements.
 
+## Important note
+
+Although the logic seems a bit off, with both an data an a resource fetching subscription information
+this has to do with reasons of continues changes, with an apply of a simple tag, it would recreate the whole stack after (rsg etc.)
+
 ## How to work with the CSP configuration
 
 you need to configure the restful provider.
