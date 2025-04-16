@@ -25,6 +25,11 @@ resource "azapi_resource" "subscription" {
       workload     = var.sku
     }
   }
+
+  response_export_values = {
+    subscriptionId = "value.subscriptionId"
+    displayName    = "value.displayName"
+  }
 }
 
 resource "restful_operation" "subscription" {
@@ -48,24 +53,23 @@ resource "restful_operation" "subscription" {
   }
 }
 
-data "azurerm_subscriptions" "this" {
-  display_name_contains = var.name
-  depends_on            = [restful_operation.subscription, azapi_resource.subscription]
+data "restful_resource" "subscription_metadata" {
+  count = var.channel == "csp" ? 1 : 0
+
+  id     = "/api/create-subscription/${restful_operation.subscription[0].output}"
+  method = "GET"
 }
 
-data "azapi_resource_list" "subscription_metadata" {
-  type      = "Microsoft.Resources/subscriptions@2024-11-01"
-  parent_id = "/"
+locals {
+  csp_response             = var.channel == "ea" ? {} : jsondecode(data.restful_resource.subscription_metadata[0].output)
+  display_name             = var.channel == "ea" ? azapi_resource.subscription[0].output.displayName : local.csp_response.subscription.name
+  subscription_id          = var.channel == "ea" ? azapi_resource.subscription[0].output.subscriptionId : local.csp_response.subscription.Id
+  subscription_resource_id = provider::azurerm::normalise_resource_id("/subscriptions/${local.subscription_id}")
 
-  response_export_values = {
-    subscriptionId = "value[?displayName == '${var.name}'].subscriptionId"
-    displayName    = "value[?displayName == '${var.name}'].displayName"
-    id             = "value[?displayName == '${var.name}'].id"
-  }
 }
 
 resource "azurerm_management_group_subscription_association" "this" {
   count               = var.channel == "csp" ? 1 : 0
   management_group_id = var.parent_management_group_id
-  subscription_id     = data.azurerm_subscriptions.this.subscriptions[0].id
+  subscription_id     = local.subscription_resource_id
 }
