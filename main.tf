@@ -18,7 +18,6 @@ resource "azapi_resource" "subscription" {
         managementGroupId    = var.parent_management_group_id
         subscriptionOwnerId  = var.owner_id
         subscriptionTenantId = data.azurerm_client_config.current.tenant_id
-        tags                 = var.tags
       }
       billingScope = data.azurerm_billing_mca_account_scope.this[0].id
       displayName  = var.name
@@ -72,4 +71,15 @@ resource "azurerm_management_group_subscription_association" "this" {
   count               = var.channel == "csp" ? 1 : 0
   management_group_id = var.parent_management_group_id
   subscription_id     = data.azapi_resource_list.subscription_metadata.output.id[0]
+}
+
+resource "azapi_resource" "subscription_tags" {
+  type      = "Microsoft.Resources/tags@2024-11-01"
+  name      = "default"
+  parent_id = length(data.azapi_resource_list.subscription_metadata.output.id) > 0 ? data.azapi_resource_list.subscription_metadata.output.id[0] : data.azurerm_subscriptions.this.subscriptions[0].id
+  body = {
+    properties = {
+      tags = var.tags
+    }
+  }
 }
