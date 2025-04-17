@@ -25,6 +25,10 @@ resource "azapi_resource" "subscription" {
       workload     = var.sku
     }
   }
+  response_export_values = {
+    subscriptionId = "properties.subscriptionId"
+    displayName    = "name"
+  }
 }
 
 resource "restful_operation" "subscription" {
