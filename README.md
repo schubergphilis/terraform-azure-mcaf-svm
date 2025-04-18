@@ -3,8 +3,10 @@ This terraform module will be able to manage subscriptions for CSP and Enterpris
 
 ## Important note
 
-Although the logic seems a bit off, with both an data an a resource fetching subscription information
-this has to do with reasons of continues changes, with an apply of a simple tag, it would recreate the whole stack after (rsg etc.)
+Creation of subscriptions is a one-time operation. This module does not support changing the name of subscriptions or modifying the SKU or other properties afterwards.
+
+Although moving a subscription to another managment group is supported for CSP subscriptions, this is not possible with EA subscriptions without an import of an association resource. 
+Allowing for move of management group for EA subscriptions is therefore out of scope for this module as it is also considered a very rare or specific use-case.
 
 ## How to work with the CSP configuration
 
@@ -99,7 +101,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [azapi_resource.subscription](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/resources/resource) | resource |
-| [azapi_resource.subscription_tags](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/resources/resource) | resource |
+| [azapi_update_resource.subscription_tags](https://registry.terraform.io/providers/azure/azapi/2.3.0/docs/resources/update_resource) | resource |
 | [azurerm_management_group_subscription_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_group_subscription_association) | resource |
 | [restful_operation.subscription](https://registry.terraform.io/providers/magodo/restful/0.14.0/docs/resources/operation) | resource |
 | [azurerm_billing_mca_account_scope.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/billing_mca_account_scope) | data source |
