@@ -29,6 +29,10 @@ resource "azapi_resource" "subscription" {
     subscriptionId = "properties.subscriptionId"
     displayName    = "name"
   }
+
+  lifecycle {
+    ignore_changes = [name, body]
+  }
 }
 
 resource "restful_operation" "subscription" {
@@ -50,6 +54,11 @@ resource "restful_operation" "subscription" {
       pending = ["202"]
     }
   }
+
+  lifecycle {
+    ignore_changes = [body]
+
+  }
 }
 
 data "restful_resource" "subscription_metadata" {
@@ -63,7 +72,7 @@ locals {
   csp_response             = var.channel == "ea" ? {} : jsondecode(data.restful_resource.subscription_metadata[0].output)
   display_name             = var.channel == "ea" ? azapi_resource.subscription[0].output.displayName : local.csp_response.subscription.name
   subscription_id          = var.channel == "ea" ? azapi_resource.subscription[0].output.subscriptionId : local.csp_response.subscription.Id
-  subscription_resource_id = provider::azurerm::normalise_resource_id("/subscriptions/${local.subscription_id}")
+  subscription_resource_id = "/subscriptions/${local.subscription_id}"
 
 }
 
@@ -73,10 +82,9 @@ resource "azurerm_management_group_subscription_association" "this" {
   subscription_id     = local.subscription_resource_id
 }
 
-resource "azapi_resource" "subscription_tags" {
-  type      = "Microsoft.Resources/tags@2024-11-01"
-  name      = "default"
-  parent_id = local.subscription_resource_id
+resource "azapi_update_resource" "subscription_tags" {
+  type        = "Microsoft.Resources/tags@2024-11-01"
+  resource_id = "${local.subscription_resource_id}/providers/Microsoft.Resources/tags/default"
   body = {
     properties = {
       tags = var.tags
