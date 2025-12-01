@@ -4,6 +4,20 @@ All notable changes to this project will automatically be documented in this fil
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.5.2 - 2025-12-01
+
+### What's Changed
+
+#### 🐛 Bug Fixes
+
+* chore: Fix Semantic versioning (#8) @Dennisvandermeulen
+
+#### 🧺 Miscellaneous
+
+* chore: Fix Semantic versioning (#8) @Dennisvandermeulen
+
+**Full Changelog**: https://github.com/schubergphilis/terraform-azure-mcaf-svm/compare/v0.5.1...v0.5.2
+
 ## v0.5.1 - 2025-04-22
 
 ### What's Changed
